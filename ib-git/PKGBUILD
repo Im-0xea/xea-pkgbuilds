@@ -1,34 +1,31 @@
-# Maintainer: Niki <nik@cock.lu>
+# Maintainer: exkc <exxxxkc@getgoogleoff.me>
+# Co-Maintainer: Niki <nik@cock.lu>
+_pkgname=ib
 pkgname=ib-git
-pkgver=
+pkgver=0.1.r1.g905836f
 pkgrel=1
 pkgdesc=""
-arch=()
+arch=(x86_64 i686 aarch64 armv7)
 url="https://socki.moe"
 license=('CC0')
-groups=()
-depends=()
-makedepends=()
-optdepends=()
-provides=()
-conflicts=()
-replaces=()
-backup=()
-options=()
-install=
-changelog=
-source=("git+https://github.com/Nik-Nothing/ibranching.git")
-noextract=()
-md5sums=() #autofill using updpkgsums
+source=("${_pkgname}::git+https://github.com/Nik-Nothing/ibranching.git")
+conflicts=("${_pkgname}")
+provides=("${_pkgname}")
+sha256sums=('SKIP')
+
+pkgver() {
+  cd "$_pkgname"
+  git describe --long | sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g'
+}
 
 build() {
-  cd $pkgname
+  cd "$_pkgname"
 
-  make bootstrap
+  make bootstrap PREFIX=/usr 
 }
 
 package() {
-  cd $pkgname
+  cd "$_pkgname"
 
-  make DESTDIR="$pkgdir/" install
+  make DESTDIR="$pkgdir/" PREFIX=/usr  install
 }
