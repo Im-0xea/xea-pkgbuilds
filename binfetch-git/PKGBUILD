@@ -24,7 +24,7 @@ md5sums=() #autofill using updpkgsums
 build() {
   cd $pkgname
 
-  make bootstrap
+  make
 }
 
 package() {
